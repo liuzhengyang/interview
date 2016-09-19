@@ -158,8 +158,8 @@ rabbitmq、activemq, redis实现，beanstalk
 
 
 
-
-# 书籍记录（强烈退款)
+# 书籍记录
+# 强烈推荐
 * Java并发编程实践
 * 深入理解Java虚拟机
 * java虚拟机规范7、8
@@ -167,14 +167,33 @@ rabbitmq、activemq, redis实现，beanstalk
 * TCP/IP详解
 * Netty In Action(英文版的)
 
-# 扩展视野的书籍
-* 大型网站xxx
-* 深入分析javaWeb内幕
+# 推荐
+* Clean Code( 代码整洁知道)
+* EffectiveJava
+* 重构( 我刚看了一点，羞愧，要补一补)
+* Thinking In Java( 我刚看了一点，羞愧，要补一补)
+* 代码大全
+
+# 比较推荐的书籍
+* 大型网站xxx（淘宝出的一些书，技术演进等等，能对互联网常用技术、发展有一个大概了解）
+* Spring揭秘
+* 
 * 从Paxos到Zookeeper
 * Go语言编程
+* Java并发编程的艺术
+* Docker的一些书(介绍用就可以了，主要靠实践)
+* 深入分析javaWeb内幕
 
-# 选择读的书籍(写的一般，不推荐)
+# 拓展视野的书籍
+* 软技能
+* 人月神话
+*
+
+
+
+# 选择读的书籍(一般推荐,有时间读一读)
 * Java特种兵
 * ElasticSearch服务器开发
-* 
+* Spring 3.x 企业应用开发
+* spring技术内幕
 
