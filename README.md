@@ -37,6 +37,8 @@ ip和网卡地址的互相解析
 * 对方设置SO_LINGER为启用且到时了，对方会发送一个RST包，表示连接已经被重置，对方的端口不会表示成TIME_WAIT状态
 * 中间如果有代理服务，代理服务可能会判断连接会话超时，同时向双方发送RST
 * RST包: 在向一个没有监听的端口发送SYN时，也会返回 
+
+
 ### TCP 连接参数  TCP_NO_DELAY, TCP_KEEPALIVE, TCP_SO_LINGER
 NO_DELAY是是否启用Nagle，TODO
 ### TCP延迟确认 200ms问题
