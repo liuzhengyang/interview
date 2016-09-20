@@ -68,6 +68,12 @@ jdk bin目录下的工具
 
 ### java 如何实现多态
 
+### 收藏资料
+JRebel发布的
+[mastering java bytecode](https://github.com/liuzhengyang/interview/blob/master/mastering-java-bytecode.pdf)
+[do you really get classloader](https://github.com/liuzhengyang/interview/blob/master/do-you-really-get-classloaders.pdf)
+[Jrebel的实验室](http://zeroturnaround.com/rebellabs/)
+
 ## java语言
 
 ### java优点和缺点
