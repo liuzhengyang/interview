@@ -3,7 +3,7 @@ title: 面试问题收藏
 date: 2016-09-19 23:58:35
 tags:
 ---
-
+[toc]
 # 面试问题收藏
 这些是我最近想到的一些问题，比较基础，但是一些自己还不是很明白，需要思考学习。
 
@@ -69,10 +69,10 @@ jdk bin目录下的工具
 ### java 如何实现多态
 
 ### 收藏资料
-JRebel发布的
-[mastering java bytecode](https://github.com/liuzhengyang/interview/blob/master/mastering-java-bytecode.pdf)
-[do you really get classloader](https://github.com/liuzhengyang/interview/blob/master/do-you-really-get-classloaders.pdf)
-[Jrebel的实验室](http://zeroturnaround.com/rebellabs/)
+#### JRebel发布的
+* [mastering java bytecode](https://github.com/liuzhengyang/interview/blob/master/mastering-java-bytecode.pdf)
+* [do you really get classloader](https://github.com/liuzhengyang/interview/blob/master/do-you-really-get-classloaders.pdf)
+* [Jrebel的实验室](http://zeroturnaround.com/rebellabs/)
 
 ## java语言
 
@@ -116,7 +116,11 @@ ChannelHandler 中实现我们的业务逻辑，或者一些Codec编码解码器
 Channel 代表一个连接
 ChannelPipeline, 每个Channel会有一个ChannelPipeline
 ChannelHandlerContext， pipeline和handler关联起来
-ByteBuf netty里的ByteBuffer实现
+ByteBuf Netty里的ByteBuffer实现
+
+### 收藏资料
+* [Doug Lea的一个ppt](https://github.com/liuzhengyang/interview/blob/master/nio.pdf)
+* 
 
 ### Jetty Tomcat
 Servlet的作用，Servlet生命周期
@@ -146,7 +150,6 @@ rabbitmq、activemq, redis实现，beanstalk
 ### Spring如何实现生命式事务的
 ### Spring如何实现Aspect AOP的
 ### Spring MVC结构，一个http request在spring中是如何流转的
-### 
 ### spring boot 
 
 ## 数据库
@@ -172,6 +175,7 @@ rabbitmq、activemq, redis实现，beanstalk
 * 高性能mysql
 * TCP/IP详解
 * Netty In Action(英文版的)
+* 计算机程序的构造与解释
 
 # 推荐
 * Clean Code( 代码整洁知道)
