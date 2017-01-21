@@ -80,6 +80,12 @@ http over SSL/TLS
 
 ## Java方面
 
+### HashMap的内部实现
+HashMap是Map的一个实现，内部数据结构通常是数组，数组的元素通常是链表，链表的元素是key-value的键值对。通过hash函数将key映射到一个hash值，这个hash值可以用来路由到具体的数组上。JDK8后会在链表长度达到一定长度后转换成一个红黑树。当HashMap存储的元素较多时，会造成链表比较长，这样get和put等操作的时间会增加，所以HashMap需要动态扩容，规则是HashMap中有一个capacity值和loadFactor值，现版本默认分别是16和0.75，capacity就是内部数组的大小，当Map的数据也就是键值对的数量超过capacity * loadFactor时就会进行resize或叫rehash，会创建一个2*capacity的数组，并将旧数组的内容转移到新数组上。
+
+### HashMap、HashTable、ConcurrentHashMap
+通常意义上讲HashMap不是线程安全的，HashTable是线程安全的，原因是HashMap中的并发resize()操作可能导致Node数据引用错误，甚至出现死循环，并且Node中的value和next没有使用volatile声明也没有其他加锁等可见性保证，所以在并发使用HashMap时必须要在外层加锁。HashTable解决了这个问题是通过将其对外方法上都加上了synchronized关键字在实例对象上加锁来维护数据一致性、可见性来实现线程安全的。但是即使是这样在putIfAbsent等操作还是需要外部加锁。由于HashTable将方法都加锁，导致操作都是串行执行的，性能不佳。ConcurrentHashMap是java.util.concurrent包中的一种并发集合，用来替代HashTable成为线程安全的HashMap，替代的是HashTable的线程安全语义而不是它的synchronize同步语义。ConcurrentHashMap中读不加锁，写入时采取分段锁，将锁的粒度拆小到每个数组上，这样大大减少了锁冲突，并且有Node中使用volatile等其他可见性保证。
+
 ### 常用的linux命令
 #### 日常操作
 * cp
@@ -326,4 +332,6 @@ rabbitmq、activemq, redis实现，beanstalk
 * ElasticSearch服务器开发
 * Spring 3.x 企业应用开发
 * spring技术内幕
+
+
 
