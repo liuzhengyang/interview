@@ -85,6 +85,26 @@ HashMap是Map的一个实现，内部数据结构通常是数组，数组的元�
 
 ### HashMap、HashTable、ConcurrentHashMap
 通常意义上讲HashMap不是线程安全的，HashTable是线程安全的，原因是HashMap中的并发resize()操作可能导致Node数据引用错误，甚至出现死循环，并且Node中的value和next没有使用volatile声明也没有其他加锁等可见性保证，所以在并发使用HashMap时必须要在外层加锁。HashTable解决了这个问题是通过将其对外方法上都加上了synchronized关键字在实例对象上加锁来维护数据一致性、可见性来实现线程安全的。但是即使是这样在putIfAbsent等操作还是需要外部加锁。由于HashTable将方法都加锁，导致操作都是串行执行的，性能不佳。ConcurrentHashMap是java.util.concurrent包中的一种并发集合，用来替代HashTable成为线程安全的HashMap，替代的是HashTable的线程安全语义而不是它的synchronize同步语义。ConcurrentHashMap中读不加锁，写入时采取分段锁，将锁的粒度拆小到每个数组上，这样大大减少了锁冲突，并且有Node中使用volatile等其他可见性保证。
+> The basic strategy is to subdivide the table among Segments,
+     each of which itself is a concurrently readable hash table.  To
+     reduce footprint, all but one segments are constructed only
+     when first needed (see ensureSegment). To maintain visibility
+     in the presence of lazy construction, accesses to segments as
+     well as elements of segment's table must use volatile access,
+     which is done via Unsafe within methods segmentAt etc
+     below. These provide the functionality of AtomicReferenceArrays
+     but reduce the levels of indirection. Additionally,
+     volatile-writes of table elements and entry "next" fields
+     within locked operations use the cheaper "lazySet" forms of
+     writes (via putOrderedObject) because these writes are always
+     followed by lock releases that maintain sequential consistency
+     of table updates.
+     
+     Historical note: The previous version of this class relied
+     heavily on "final" fields, which avoided some volatile reads at
+     the expense of a large initial footprint.  Some remnants of
+     that design (including forced construction of segment 0) exist
+     to ensure serialization compatibility.
 
 ### 常用的linux命令
 #### 日常操作

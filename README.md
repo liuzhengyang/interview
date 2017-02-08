@@ -15,14 +15,14 @@ TCP/IP是指由TCP、UDP、IP、ICMP等协议组成的协议簇
 ### TCP握手过程、关闭和状态变化，对应到程序中是哪些函数调用
 常说的三次握手，四次挥手。还是用图来表示最清楚了。
 
-### TCP是怎么保证可靠性的
-超时重连
 ### TCP和UDP的区别
 TCP: 面向连接，提供可靠性机制
 UDP: 不保证可靠性
 ### IP层的作用
 IP层负责主机路由
-TCP层负责端到端的传输，主机上的每个程序都可以是一个端。用一个端口号表示
+TCP层负责端到端的传输，主机上的每个程序都可以是一个端。用一个端口号表示。
+### TCP层和IP层的区别
+TCP层在IP层的基础上，增加了校验位验证数据完整性，为每个字节分配一个一个序列号，这样可以在数据包不按顺序到达目的地时可以重新组合，另外还提供了确认和重传的机制来提高数据到达可靠性，
 ### tcpdump、wireshark使用
 tcpdump -i eth1 tcp port 2222 and src 122.222.22
 wireshark界面和命令行 
@@ -78,14 +78,6 @@ http over SSL/TLS
 
 
 
-## Java方面
-
-### HashMap的内部实现
-HashMap是Map的一个实现，内部数据结构通常是数组，数组的元素通常是链表，链表的元素是key-value的键值对。通过hash函数将key映射到一个hash值，这个hash值可以用来路由到具体的数组上。JDK8后会在链表长度达到一定长度后转换成一个红黑树。当HashMap存储的元素较多时，会造成链表比较长，这样get和put等操作的时间会增加，所以HashMap需要动态扩容，规则是HashMap中有一个capacity值和loadFactor值，现版本默认分别是16和0.75，capacity就是内部数组的大小，当Map的数据也就是键值对的数量超过capacity * loadFactor时就会进行resize或叫rehash，会创建一个2*capacity的数组，并将旧数组的内容转移到新数组上。
-
-### HashMap、HashTable、ConcurrentHashMap
-通常意义上讲HashMap不是线程安全的，HashTable是线程安全的，原因是HashMap中的并发resize()操作可能导致Node数据引用错误，甚至出现死循环，并且Node中的value和next没有使用volatile声明也没有其他加锁等可见性保证，所以在并发使用HashMap时必须要在外层加锁。HashTable解决了这个问题是通过将其对外方法上都加上了synchronized关键字在实例对象上加锁来维护数据一致性、可见性来实现线程安全的。但是即使是这样在putIfAbsent等操作还是需要外部加锁。由于HashTable将方法都加锁，导致操作都是串行执行的，性能不佳。ConcurrentHashMap是java.util.concurrent包中的一种并发集合，用来替代HashTable成为线程安全的HashMap，替代的是HashTable的线程安全语义而不是它的synchronize同步语义。ConcurrentHashMap中读不加锁，写入时采取分段锁，将锁的粒度拆小到每个数组上，这样大大减少了锁冲突，并且有Node中使用volatile等其他可见性保证。
-
 ### 常用的linux命令
 #### 日常操作
 * cp
@@ -118,6 +110,22 @@ HashMap是Map的一个实现，内部数据结构通常是数组，数组的元�
 ### java的命令
 jdk bin目录下的工具
 
+
+## Java方面
+
+### HashMap的内部实现
+HashMap是Map的一个实现，内部数据结构通常是数组，数组的元素通常是链表，链表的元素是key-value的键值对。通过hash函数将key映射到一个hash值，这个hash值可以用来路由到具体的数组上。JDK8后会在链表长度达到一定长度后转换成一个红黑树。当HashMap存储的元素较多时，会造成链表比较长，这样get和put等操作的时间会增加，所以HashMap需要动态扩容，规则是HashMap中有一个capacity值和loadFactor值，现版本默认分别是16和0.75，capacity就是内部数组的大小，当Map的数据也就是键值对的数量超过capacity * loadFactor时就会进行resize或叫rehash，会创建一个2*capacity的数组，并将旧数组的内容转移到新数组上。
+
+### HashMap、HashTable、ConcurrentHashMap
+通常意义上讲HashMap不是线程安全的，HashTable是线程安全的，原因是HashMap中的并发resize()操作可能导致Node数据引用错误，甚至出现死循环，并且Node中的value和next没有使用volatile声明也没有其他加锁等可见性保证，所以在并发使用HashMap时必须要在外层加锁。HashTable解决了这个问题是通过将其对外方法上都加上了synchronized关键字在实例对象上加锁来维护数据一致性、可见性来实现线程安全的。但是即使是这样在putIfAbsent等操作还是需要外部加锁。由于HashTable将方法都加锁，导致操作都是串行执行的，性能不佳。ConcurrentHashMap是java.util.concurrent包中的一种并发集合，用来替代HashTable成为线程安全的HashMap，替代的是HashTable的线程安全语义而不是它的synchronize同步语义。ConcurrentHashMap中读不加锁，写入时采取分段锁，将锁的粒度拆小到每个数组上，这样大大减少了锁冲突，并且有Node中使用volatile等其他可见性保证。
+
+### 动态代理
+静态代理是指手动实现一个接口或继承一个类，并将方法转发到其他的实现上，并在其上包装一些其他功能，如打日志、认证等。这样的方式缺点是需要给每个类都写一个代理，耦合严重且繁琐易出错。
+动态代理可以在运行时生成或替换对应接口的实现, 常见的动态代理技术有jdk Proxy, CGlib, ASM字节码增强等。jdk Proxy主要依靠java.lang.reflect.Proxy。
+JDK Proxy 参考链接
+* https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html
+* http://rejoy.iteye.com/blog/1627405
+* https://opencredo.com/dynamic-proxies-java-part-2/
 
 ## Java字节码、jvm相关
 
